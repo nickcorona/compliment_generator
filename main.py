@@ -35,7 +35,7 @@ def generate_compliment(name):
         engine="text-davinci-002",
         prompt=f"Write a creative and heartwarming compliment including their name, {name}.",
         temperature=0.7,
-        max_tokens=60,
+        max_tokens=100,
     )
     return response.choices[0].text.strip()  # type: ignore
 
