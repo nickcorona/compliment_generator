@@ -3,58 +3,64 @@ import openai
 import os
 import dotenv
 
-# load the environment variables
-dotenv.load_dotenv()
 
-# your email credentials
-email = "nicklucianocorona@gmail.com"
-password = os.getenv("EMAIL_PASSWORD")
-
-# recipient's email
-to_email = "jessicasarah.christian@gmail.com"
-
-# OpenAI API key
-openai.api_key = os.getenv("OPENAI_API_KEY")
+def load_env_vars():
+    """Load environment variables from .env file."""
+    dotenv.load_dotenv()
 
 
-# function to generate compliment
-def generate_compliment():
+def get_email_credentials():
+    """Get email credentials from environment variables."""
+    email = os.getenv("EMAIL_ADDRESS")
+    password = os.getenv("EMAIL_PASSWORD")
+    if not email or not password:
+        raise ValueError(
+            "Email address or password not found in environment variables."
+        )
+    return email, password
+
+
+def get_openai_api_key():
+    """Get OpenAI API key from environment variables."""
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OpenAI API key not found in environment variables.")
+    return api_key
+
+
+def generate_compliment(name):
+    """Generate a compliment using OpenAI API."""
+    openai.api_key = get_openai_api_key()
     response = openai.Completion.create(
         engine="text-davinci-002",
-        prompt=f"Write a creative and heartwarming compliment including their name, Jessica.",
+        prompt=f"Write a creative and heartwarming compliment including their name, {name}.",
         temperature=0.7,
         max_tokens=60,
     )
-
-    # access the text attribute of the first item in the choices list
     return response.choices[0].text.strip()  # type: ignore
 
 
-# function to send email
-def send_compliment():
-    # generate a compliment
-    compliment = generate_compliment()
-
-    # establish a secure session
+def send_email(to_email, subject, body):
+    """Send an email using SMTP."""
+    email, password = get_email_credentials()
     server = smtplib.SMTP("smtp.gmail.com", 587)
     server.starttls()
-
-    # login to your email
-    if password is None:
-        raise ValueError("EMAIL_PASSWORD environment variable is not set")
-    server.login(email, str(password))
-
-    # compose the email
-    subject = "Your Daily Compliment!"
-    body = compliment
+    server.login(email, password)
     msg = f"Subject: {subject}\n\n{body}"
-
-    # send the email
     server.sendmail(email, to_email, msg)
-
-    # logout from your email
     server.quit()
 
 
-# send the compliment
-send_compliment()
+def send_compliment(to_email, name):
+    """Generate a compliment and send it via email."""
+    compliment = generate_compliment(name)
+    subject = "Your Daily Compliment!"
+    body = compliment
+    send_email(to_email, subject, body)
+
+
+if __name__ == "__main__":
+    load_env_vars()
+    to_email = "nicklucianocorona@gmail.com"
+    name = "Jessica"
+    send_compliment(to_email, name)
