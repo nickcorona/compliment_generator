@@ -1,51 +1,43 @@
 # Compliment Generator
 
-Compliment Generator is a Python project that generates personalized compliments and sends them via email at a random time between 7:00 AM and 10:00 PM.
+A Python application that generates a personalized compliment for a specific person and sends it via email. It is designed to be scheduled to run at a random time each day.
 
-## Getting Started
+## How to Use
 
-### Prerequisites
+1. Clone this repository.
+2. Install the required dependencies: `pip install -r requirements.txt`.
+3. Create a `.env` file to store your environment variables (email details, OpenAI API key, recipient's email, and name).
+4. Run the script manually to test it: `python main.py`.
 
-The project requires the following software:
+## Scheduling the Task
 
-- Python 3.8 or higher
-- `openai` Python library for generating compliments
-- `python-dotenv` for environment variable handling
+You can schedule the script to run daily at a random time using either the Windows Task Scheduler or a cron job in Linux.
 
-The project also needs an OpenAI API key to generate the compliments.
+### Windows
 
-### Installation
+Follow these steps to schedule the task with Task Scheduler:
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/nickcorona/ComplimentGenerator.git
-   ```
+1. Open the Task Scheduler application.
+2. Click on `Create Basic Task`.
+3. Name the task and set the trigger to `Daily`.
+4. In the `Action` step, select `Start a program` and browse to the Python executable file (usually located in your Python installation directory) and add the path to `main.py` script in the `Add arguments` section.
+5. Finish the setup.
 
-2. Install the required Python packages:
-   ```sh
-   pip install openai python-dotenv
-   ```
+You might need to adjust these steps based on your specific version of Windows.
 
-3. Create a `.env` file in the project root directory and set the following variables:
-   - `OPENAI_API_KEY`: your OpenAI API key
-   - `EMAIL_ADDRESS`: the email address from which to send the compliments
-   - `EMAIL_PASSWORD`: the password for the email address
-   - `SMTP_SERVER`: the SMTP server for the email provider
-   - `SMTP_PORT`: the SMTP port for the email provider
-   - `TO_EMAIL`: the recipient's email address
-   - `NAME`: the name of the recipient
+### Linux
 
-## Usage
+To schedule the script to run daily with cron, follow these steps:
 
-To run the script:
-```sh
-python main.py
-```
+1. Open your terminal.
+2. Type `crontab -e` to edit the cron file.
+3. Add a new line in the following format:  
+   `* * * * * /usr/bin/python3 /path/to/your/script/main.py >> /path/to/your/logfile.log 2>&1`  
+   This will run the script every minute. Adjust the time according to your needs. The output will be logged to the specified log file.
+4. Save and close the file.
 
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please note that the frequency and exact timing will depend on the specific configuration of your cron file.
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
