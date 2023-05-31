@@ -1,9 +1,10 @@
-import smtplib
-import openai
-import os
-import dotenv
 import logging
+import os
 import random
+import smtplib
+
+import dotenv
+import openai
 
 # Set up logging
 logging.basicConfig(
