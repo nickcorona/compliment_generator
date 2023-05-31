@@ -2,9 +2,9 @@ import logging
 import os
 import random
 import smtplib
-from time import sleep
 from datetime import date, datetime, time
 from random import randint
+from time import sleep
 
 import dotenv
 import openai
