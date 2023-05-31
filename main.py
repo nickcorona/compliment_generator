@@ -71,8 +71,10 @@ def send_email(to_email, subject, body):
     """Send an email using SMTP."""
     email = get_env_var("EMAIL_ADDRESS")
     password = get_env_var("EMAIL_PASSWORD")
+    smtp_server = get_env_var("SMTP_SERVER")
+    smtp_port = int(get_env_var("SMTP_PORT"))  # convert to int
     try:
-        with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
             server.login(email, password)
             msg = f"Subject: {subject}\n\n{body}"
