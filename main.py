@@ -21,7 +21,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 def generate_compliment():
     response = openai.Completion.create(
         engine="text-davinci-002",
-        prompt="Write a creative and heartwarming compliment",
+        prompt=f"Write a creative and heartwarming compliment including their name, Jessica.",
         temperature=0.7,
         max_tokens=60,
     )
@@ -40,7 +40,9 @@ def send_compliment():
     server.starttls()
 
     # login to your email
-    server.login(email, password)
+    if password is None:
+        raise ValueError("EMAIL_PASSWORD environment variable is not set")
+    server.login(email, str(password))
 
     # compose the email
     subject = "Your Daily Compliment!"
