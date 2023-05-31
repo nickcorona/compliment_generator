@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 
 # your email credentials
 email = "nicklucianocorona@gmail.com"
-password = "bintmepakbdjbwei"
+password = os.getenv("EMAIL_PASSWORD")
 
 # recipient's email
 to_email = "jessicasarah.christian@gmail.com"
