@@ -11,7 +11,23 @@ logging.basicConfig(
 )
 
 # List of attributes for Jessica
-attributes = ["kindness", "intelligence", "creativity", "courage", "positivity"]
+attributes = [
+    "kindness",
+    "intelligence",
+    "creativity",
+    "courage",
+    "positivity",
+    "determination",
+    "patience",
+    "humor",
+    "passion",
+    "sensitivity",
+    "empathy",
+    "adventurous",
+    "resilience",
+    "generosity",
+    "ambition",
+]
 
 
 def load_env_vars():
