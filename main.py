@@ -3,11 +3,15 @@ import openai
 import os
 import dotenv
 import logging
+import random
 
 # Set up logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
+
+# List of attributes for Jessica
+attributes = ["kindness", "intelligence", "creativity", "courage", "positivity"]
 
 
 def load_env_vars():
@@ -26,16 +30,24 @@ def get_env_var(var_name):
 def generate_compliment(name):
     """Generate a compliment using OpenAI API."""
     openai.api_key = get_env_var("OPENAI_API_KEY")
+
+    # Select a random attribute
+    attribute = random.choice(attributes)
+    prompt = (
+        f"Craft a personalized compliment for {name}, highlighting their {attribute}."
+    )
+
     try:
         response = openai.Completion.create(
             engine="text-davinci-002",
-            prompt=f"Write a creative and heartwarming compliment or a nice message for {name}",
+            prompt=prompt,
             temperature=0.7,
             max_tokens=100,
         )
     except Exception as e:
         logging.error(f"Error when calling OpenAI API: {e}")
         raise
+
     return response.choices[0].text.strip()  # type: ignore
 
 
