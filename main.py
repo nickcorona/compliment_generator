@@ -12,7 +12,6 @@ password = "bintmepakbdjbwei"
 
 # recipient's email
 to_email = "jessicasarah.christian@gmail.com"
-to_email = email
 
 # OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
