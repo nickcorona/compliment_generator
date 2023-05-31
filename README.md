@@ -61,7 +61,7 @@ To schedule the script to run daily with cron, follow these steps:
 2. Type `crontab -e` to edit the cron file.
 3. Add a new line in the following format:  
    `0 7 * * * /usr/bin/python3 /path/to/your/script/main.py >> /path/to/your/logfile.log 2>&1`  
-   This will run the script every minute. Adjust the time according to your needs. The output will be logged to the specified log file.
+   This will run the script daily at 7:00 AM. Adjust the time according to your needs. The output will be logged to the specified log file.
 4. Save and close the file.
 
 Please note that the frequency and exact timing will depend on the specific configuration of your cron file.
