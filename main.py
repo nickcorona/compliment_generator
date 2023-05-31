@@ -14,7 +14,7 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-# List of attributes for Jessica
+# List of attributes for personalized compliments
 attributes = [
     "kindness",
     "intelligence",
