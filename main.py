@@ -33,7 +33,7 @@ def generate_compliment(name):
     openai.api_key = get_openai_api_key()
     response = openai.Completion.create(
         engine="text-davinci-002",
-        prompt=f"Write a creative and heartwarming compliment including their name, {name}.",
+        prompt=f"Write a creative and heartwarming compliment or a nice message for {name}",
         temperature=0.7,
         max_tokens=100,
     )
