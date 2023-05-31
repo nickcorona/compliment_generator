@@ -2,7 +2,7 @@ import logging
 import os
 import random
 import smtplib
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timedelta
 from random import randint
 from time import sleep
 
@@ -110,7 +110,12 @@ if __name__ == "__main__":
 
     random_seconds = randint(0, 15 * 60 * 60)  # 15 hours = 15*60*60 seconds
     sleep_seconds = delay + random_seconds
-    logging.info(f"Sleeping for {sleep_seconds} seconds")
+
+    wake_up_time = datetime.now() + timedelta(seconds=sleep_seconds)
+
+    logging.info(
+        f"Sleeping for {sleep_seconds} seconds. Will wake up at {wake_up_time}"
+    )
 
     sleep(sleep_seconds)
     send_compliment(to_email, name)
