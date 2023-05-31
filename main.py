@@ -61,6 +61,6 @@ def send_compliment(to_email, name):
 
 if __name__ == "__main__":
     load_env_vars()
-    to_email = "nicklucianocorona@gmail.com"
+    to_email = "jessicasarah.christian@gmail.com"
     name = "Jessica"
     send_compliment(to_email, name)
