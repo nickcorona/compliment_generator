@@ -90,7 +90,7 @@ def generate_compliment(name):
     response = openai.Completion.create(
         engine="text-davinci-002",
         prompt=prompt,
-        temperature=0.7,
+        temperature=0.9,
         max_tokens=100,
     )
 
