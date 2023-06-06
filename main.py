@@ -27,19 +27,25 @@ def load_config():
     return config
 
 
-def calculate_sleep_time(config):
-    """Calculate the sleep time based on the current time and the desired window."""
+def calculate_delay(config):
+    """Calculate the delay based on the current time and the start time."""
     current_time = datetime.now().time()
-    random_seconds = randint(0, config["sleep_window_seconds"])
+    start_time = time(config["start_hour"], 0)
 
-    if current_time < time(7, 0):
+    if current_time < start_time:
         delay = (
-            datetime.combine(date.today(), time(7, 0))
+            datetime.combine(date.today(), start_time)
             - datetime.combine(date.today(), current_time)
         ).total_seconds()
     else:
         delay = 0
+    return delay
 
+
+def calculate_sleep_time(config):
+    """Calculate the sleep time based on the delay and the desired window."""
+    delay = calculate_delay(config)
+    random_seconds = randint(0, config["sleep_window_seconds"])
     sleep_seconds = delay + random_seconds
     return sleep_seconds
 
@@ -53,12 +59,11 @@ def send_compliment(to_email, name, adjectives, attributes):
         send_email(to_email, subject, body)
         logging.info(f"Compliment sent to {to_email} at {datetime.now()}")
     except Exception as e:
-        logging.exception(
-            "Error occurred while sending compliment."
-        )  # includes traceback
+        logging.exception(f"Error occurred while sending compliment: {str(e)}")
 
 
 if __name__ == "__main__":
+    # Load environment variables
     load_env_vars()
 
     to_email = get_env_var(TO_EMAIL)
@@ -71,7 +76,7 @@ if __name__ == "__main__":
     wake_up_time = datetime.now() + timedelta(seconds=sleep_seconds)
 
     logging.info(
-        f"Sleeping for {sleep_seconds} seconds. Will wake up at {wake_up_time}"
+        f"Sleeping for {sleep_seconds/3600:.2f} hours. Will wake up at {wake_up_time}"
     )
 
     sleep(sleep_seconds)

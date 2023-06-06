@@ -86,5 +86,6 @@
         "gorgeous",
         "lovely"
     ],
-    "sleep_window_seconds": 54000
+    "sleep_window_seconds": 54000,
+    "start_hour": 7
 }
