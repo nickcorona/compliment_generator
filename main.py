@@ -192,5 +192,5 @@ if __name__ == "__main__":
         f"Sleeping for {sleep_seconds} seconds. Will wake up at {wake_up_time}"
     )
 
-    # sleep(sleep_seconds)
+    sleep(sleep_seconds)
     send_compliment(to_email, name)
