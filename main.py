@@ -1,163 +1,17 @@
 import logging
-import os
-import random
-import smtplib
 from datetime import date, datetime, time, timedelta
 from random import randint
 from time import sleep
 
-import dotenv
-import openai
+from compliment_generator import generate_compliment
+from constants import NAME, TO_EMAIL
+from email_sender import send_email
+from env_handler import get_env_var, load_env_vars
 
 # Set up logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
-
-# Constants
-LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-OPENAI_API_KEY = "OPENAI_API_KEY"
-TO_EMAIL = "TO_EMAIL"
-NAME = "NAME"
-EMAIL_ADDRESS = "EMAIL_ADDRESS"
-EMAIL_PASSWORD = "EMAIL_PASSWORD"
-SMTP_SERVER = "SMTP_SERVER"
-SMTP_PORT = "SMTP_PORT"
-
-# Set up logging
-logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
-
-# adjectives for compliments
-adjectives = [
-    "lovely",
-    "wonderful",
-    "amazing",
-    "awesome",
-    "fantastic",
-    "great",
-    "superb",
-    "excellent",
-    "incredible",
-    "fabulous",
-    "terrific",
-    "outstanding",
-    "spectacular",
-    "stunning",
-    "marvelous",
-    "magnificent",
-    "brilliant",
-    "exceptional",
-    "perfect",
-    "splendid",
-    "glorious",
-    "super",
-    "tremendous",
-    "phenomenal",
-    "remarkable",
-    "extraordinary",
-    "mind-blowing",
-    "mind-boggling",
-    "jaw-dropping",
-    "breathtaking",
-    "miraculous",
-    "astounding",
-]
-
-
-# List of attributes for personalized compliments
-attributes = [
-    "kindness",
-    "intelligence",
-    "creativity",
-    "courage",
-    "positivity",
-    "determination",
-    "patience",
-    "humor",
-    "passion",
-    "sensitivity",
-    "empathy",
-    "adventurous",
-    "resilience",
-    "generosity",
-    "ambition",
-    "grace",
-    "charm",
-    "confidence",
-    "humility",
-    "integrity",
-    "honesty",
-    "perseverance",
-    "respectfulness",
-    "sincerity",
-    "sympathy",
-    "tolerance",
-    "wit",
-    "adaptability",
-    "compassion",
-    "devotion",
-    "discipline",
-    "enthusiasm",
-    "forgiveness",
-    "loyalty",
-    "optimism",
-    "spirituality",
-    "thoughtfulness",
-    "wisdom",
-    "elegance",
-    "insightfulness",
-    "modesty",
-    "motivation",
-    "originality",
-    "resourcefulness",
-    "spontaneity",
-    "beautiful",
-    "pretty",
-    "amazing",
-    "cute",
-    "gorgeous",
-    "lovely",
-]
-
-
-def load_env_vars():
-    """Load environment variables from .env file."""
-    dotenv.load_dotenv()
-
-
-def get_env_var(var_name):
-    """Get a specified environment variable."""
-    var = os.getenv(var_name)
-    if not var:
-        raise ValueError(f"{var_name} not found in environment variables.")
-    return var
-
-
-def generate_compliment(name):
-    """Generate a compliment using OpenAI API."""
-    attribute = random.choice(attributes)
-    adjective = random.choice(adjectives)
-    prompt = (
-        f"Craft a compliment for {name}, highlighting their {adjective} {attribute}."
-    )
-
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        temperature=0.9,
-        max_tokens=100,
-    )
-
-    return response.choices[0].text.strip()  # type: ignore
-
-
-def send_email(to_email, subject, body):
-    """Send an email using SMTP."""
-    with smtplib.SMTP(get_env_var(SMTP_SERVER), int(get_env_var(SMTP_PORT))) as server:
-        server.starttls()
-        server.login(get_env_var(EMAIL_ADDRESS), get_env_var(EMAIL_PASSWORD))
-        msg = f"Subject: {subject}\n\n{body}"
-        server.sendmail(get_env_var(EMAIL_ADDRESS), to_email, msg)
 
 
 def send_compliment(to_email, name):
