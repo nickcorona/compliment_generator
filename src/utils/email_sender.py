@@ -7,8 +7,9 @@ from smtplib import (
     SMTPServerDisconnected,
 )
 
+
 from constants import EMAIL_ADDRESS, EMAIL_PASSWORD, SMTP_PORT, SMTP_SERVER
-from env_handler import get_env_var
+from utils.env_handler import get_env_var
 
 
 def send_email(to_email, subject, body):

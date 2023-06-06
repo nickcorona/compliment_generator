@@ -1,13 +1,14 @@
 import json
 import logging
+import os
 from datetime import date, datetime, time, timedelta
 from random import randint
 from time import sleep
 
 from compliment_generator import generate_compliment
 from constants import NAME, TO_EMAIL
-from email_sender import send_email
-from env_handler import get_env_var, load_env_vars
+from utils.email_sender import send_email
+from utils.env_handler import get_env_var, load_env_vars
 
 # Set up logging
 logging.basicConfig(
@@ -18,7 +19,8 @@ logging.basicConfig(
 def load_config():
     """Load configuration from config.json."""
     try:
-        with open("config.json", "r") as f:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(dir_path, "..", "data", "config.json"), "r") as f:
             config = json.load(f)
     except FileNotFoundError:
         raise FileNotFoundError("Configuration file not found.")

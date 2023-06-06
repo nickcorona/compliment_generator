@@ -6,7 +6,7 @@ from openai.api_resources.completion import Completion
 from openai.error import OpenAIError
 
 from constants import OPENAI_API_KEY
-from env_handler import get_env_var
+from utils.env_handler import get_env_var, load_env_vars
 
 
 def generate_compliment(name, adjectives, attributes):
