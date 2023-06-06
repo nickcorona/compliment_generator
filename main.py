@@ -14,6 +14,43 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+# adjectives for compliments
+adjectives = [
+    "lovely",
+    "wonderful",
+    "amazing",
+    "awesome",
+    "fantastic",
+    "great",
+    "superb",
+    "excellent",
+    "incredible",
+    "fabulous",
+    "terrific",
+    "outstanding",
+    "spectacular",
+    "stunning",
+    "marvelous",
+    "magnificent",
+    "brilliant",
+    "exceptional",
+    "perfect",
+    "splendid",
+    "glorious",
+    "super",
+    "tremendous",
+    "phenomenal",
+    "remarkable",
+    "extraordinary",
+    "mind-blowing",
+    "mind-boggling",
+    "jaw-dropping",
+    "breathtaking",
+    "miraculous",
+    "astounding",
+]
+
+
 # List of attributes for personalized compliments
 attributes = [
     "kindness",
@@ -67,41 +104,6 @@ attributes = [
     "cute",
     "gorgeous",
     "lovely",
-]
-
-adjectives = [
-    "lovely",
-    "wonderful",
-    "amazing",
-    "awesome",
-    "fantastic",
-    "great",
-    "superb",
-    "excellent",
-    "incredible",
-    "fabulous",
-    "terrific",
-    "outstanding",
-    "spectacular",
-    "stunning",
-    "marvelous",
-    "magnificent",
-    "brilliant",
-    "exceptional",
-    "perfect",
-    "splendid",
-    "glorious",
-    "super",
-    "tremendous",
-    "phenomenal",
-    "remarkable",
-    "extraordinary",
-    "mind-blowing",
-    "mind-boggling",
-    "jaw-dropping",
-    "breathtaking",
-    "miraculous",
-    "astounding",
 ]
 
 
