@@ -1,16 +1,12 @@
+import logging
 import random
 
 import openai
+from openai.api_resources.completion import Completion
+from openai.error import OpenAIError
 
 from constants import OPENAI_API_KEY
-from env_handler import get_env_var, load_env_vars
-
-# load environment variables
-load_env_vars()
-
-
-# load OpenAI API key
-openai.api_key = get_env_var(OPENAI_API_KEY)
+from env_handler import get_env_var
 
 
 def generate_compliment(name, adjectives, attributes):
@@ -21,13 +17,20 @@ def generate_compliment(name, adjectives, attributes):
         f"Craft a compliment for {name}, highlighting their {adjective} {attribute}."
     )
 
-    # load OpenAI API key
     openai.api_key = get_env_var(OPENAI_API_KEY)
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=prompt,
-        temperature=0.9,
-        max_tokens=100,
-    )
+    try:
+        response = openai.Completion.create(
+            engine="text-davinci-003",
+            prompt=prompt,
+            temperature=0.9,
+            max_tokens=100,
+        )
+    except OpenAIError as e:
+        logging.error(f"Failed to generate compliment: {str(e)}")
+        return None  # or raise the exception, depends on your use case
 
-    return response.choices[0].text.strip()  # type: ignore
+    if response and response.choices:
+        return response.choices[0].text.strip()  # type: ignore
+    else:
+        logging.warning("No compliment generated from the OpenAI API response.")
+        return None
