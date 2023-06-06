@@ -1,111 +1,21 @@
+import json
 import os
 import random
 
 import openai
 
 from constants import OPENAI_API_KEY
-from env_handler import load_env_vars, get_env_var
+from env_handler import get_env_var, load_env_vars
 
 # load environment variables
 load_env_vars()
 
+
 # load OpenAI API key
 openai.api_key = get_env_var(OPENAI_API_KEY)
 
-# adjectives for compliments
-adjectives = [
-    "lovely",
-    "wonderful",
-    "amazing",
-    "awesome",
-    "fantastic",
-    "great",
-    "superb",
-    "excellent",
-    "incredible",
-    "fabulous",
-    "terrific",
-    "outstanding",
-    "spectacular",
-    "stunning",
-    "marvelous",
-    "magnificent",
-    "brilliant",
-    "exceptional",
-    "perfect",
-    "splendid",
-    "glorious",
-    "super",
-    "tremendous",
-    "phenomenal",
-    "remarkable",
-    "extraordinary",
-    "mind-blowing",
-    "mind-boggling",
-    "jaw-dropping",
-    "breathtaking",
-    "miraculous",
-    "astounding",
-]
 
-
-# List of attributes for personalized compliments
-attributes = [
-    "kindness",
-    "intelligence",
-    "creativity",
-    "courage",
-    "positivity",
-    "determination",
-    "patience",
-    "humor",
-    "passion",
-    "sensitivity",
-    "empathy",
-    "adventurous",
-    "resilience",
-    "generosity",
-    "ambition",
-    "grace",
-    "charm",
-    "confidence",
-    "humility",
-    "integrity",
-    "honesty",
-    "perseverance",
-    "respectfulness",
-    "sincerity",
-    "sympathy",
-    "tolerance",
-    "wit",
-    "adaptability",
-    "compassion",
-    "devotion",
-    "discipline",
-    "enthusiasm",
-    "forgiveness",
-    "loyalty",
-    "optimism",
-    "spirituality",
-    "thoughtfulness",
-    "wisdom",
-    "elegance",
-    "insightfulness",
-    "modesty",
-    "motivation",
-    "originality",
-    "resourcefulness",
-    "spontaneity",
-    "beautiful",
-    "pretty",
-    "amazing",
-    "cute",
-    "gorgeous",
-    "lovely",
-]
-
-
-def generate_compliment(name):
+def generate_compliment(name, adjectives, attributes):
     """Generate a compliment using OpenAI API."""
     attribute = random.choice(attributes)
     adjective = random.choice(adjectives)
@@ -113,6 +23,8 @@ def generate_compliment(name):
         f"Craft a compliment for {name}, highlighting their {adjective} {attribute}."
     )
 
+    # load OpenAI API key
+    openai.api_key = get_env_var(OPENAI_API_KEY)
     response = openai.Completion.create(
         engine="text-davinci-003",
         prompt=prompt,
