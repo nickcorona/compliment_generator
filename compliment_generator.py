@@ -1,7 +1,6 @@
 import os
 import random
 
-import dotenv
 import openai
 
 from constants import OPENAI_API_KEY
