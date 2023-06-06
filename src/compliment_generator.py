@@ -2,11 +2,10 @@ import logging
 import random
 
 import openai
-from openai.api_resources.completion import Completion
 from openai.error import OpenAIError
 
 from constants import OPENAI_API_KEY
-from utils.env_handler import get_env_var, load_env_vars
+from utils.env_handler import get_env_var
 
 
 def generate_compliment(name, adjectives, attributes):
