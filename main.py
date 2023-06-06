@@ -122,7 +122,9 @@ def get_env_var(var_name):
 
 def generate_compliment(name):
     """Generate a compliment using OpenAI API."""
-    openai.api_key = get_env_var("OPENAI_API_KEY")
+    openai_api_key = get_env_var("OPENAI_API_KEY")
+    if not openai_api_key:
+        return "Error: OpenAI API key not found."
 
     attribute = random.choice(attributes)
     adjective = random.choice(adjectives)
@@ -138,7 +140,6 @@ def generate_compliment(name):
     )
 
     return response.choices[0].text.strip()  # type: ignore
-
 
 def send_email(to_email, subject, body):
     """Send an email using SMTP."""
