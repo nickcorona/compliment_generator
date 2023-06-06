@@ -14,6 +14,19 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+# Constants
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+OPENAI_API_KEY = "OPENAI_API_KEY"
+TO_EMAIL = "TO_EMAIL"
+NAME = "NAME"
+EMAIL_ADDRESS = "EMAIL_ADDRESS"
+EMAIL_PASSWORD = "EMAIL_PASSWORD"
+SMTP_SERVER = "SMTP_SERVER"
+SMTP_PORT = "SMTP_PORT"
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+
 # adjectives for compliments
 adjectives = [
     "lovely",
@@ -122,10 +135,6 @@ def get_env_var(var_name):
 
 def generate_compliment(name):
     """Generate a compliment using OpenAI API."""
-    openai_api_key = get_env_var("OPENAI_API_KEY")
-    if not openai_api_key:
-        return "Error: OpenAI API key not found."
-
     attribute = random.choice(attributes)
     adjective = random.choice(adjectives)
     prompt = (
@@ -141,18 +150,14 @@ def generate_compliment(name):
 
     return response.choices[0].text.strip()  # type: ignore
 
+
 def send_email(to_email, subject, body):
     """Send an email using SMTP."""
-    email = get_env_var("EMAIL_ADDRESS")
-    password = get_env_var("EMAIL_PASSWORD")
-    smtp_server = get_env_var("SMTP_SERVER")
-    smtp_port = int(get_env_var("SMTP_PORT"))  # convert to int
-
-    with smtplib.SMTP(smtp_server, smtp_port) as server:
+    with smtplib.SMTP(get_env_var(SMTP_SERVER), int(get_env_var(SMTP_PORT))) as server:
         server.starttls()
-        server.login(email, password)
+        server.login(get_env_var(EMAIL_ADDRESS), get_env_var(EMAIL_PASSWORD))
         msg = f"Subject: {subject}\n\n{body}"
-        server.sendmail(email, to_email, msg)
+        server.sendmail(get_env_var(EMAIL_ADDRESS), to_email, msg)
 
 
 def send_compliment(to_email, name):
@@ -164,14 +169,16 @@ def send_compliment(to_email, name):
         send_email(to_email, subject, body)
         logging.info(f"Compliment sent to {to_email} at {datetime.now()}")
     except Exception as e:
-        logging.error(f"Error occurred: {e}")
-        raise
+        logging.exception(
+            "Error occurred while sending compliment."
+        )  # includes traceback
 
 
 if __name__ == "__main__":
     load_env_vars()
-    to_email = get_env_var("TO_EMAIL")
-    name = get_env_var("NAME")
+
+    to_email = get_env_var(TO_EMAIL)
+    name = get_env_var(NAME)
 
     current_time = datetime.now().time()
 
