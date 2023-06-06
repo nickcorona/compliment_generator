@@ -39,7 +39,6 @@ attributes = [
     "honesty",
     "perseverance",
     "respectfulness",
-    "responsibility",
     "sincerity",
     "sympathy",
     "tolerance",
@@ -62,6 +61,47 @@ attributes = [
     "originality",
     "resourcefulness",
     "spontaneity",
+    "beautiful",
+    "pretty",
+    "amazing",
+    "cute",
+    "gorgeous",
+    "lovely",
+]
+
+adjectives = [
+    "lovely",
+    "wonderful",
+    "amazing",
+    "awesome",
+    "fantastic",
+    "great",
+    "superb",
+    "excellent",
+    "incredible",
+    "fabulous",
+    "terrific",
+    "outstanding",
+    "spectacular",
+    "stunning",
+    "marvelous",
+    "magnificent",
+    "brilliant",
+    "exceptional",
+    "perfect",
+    "splendid",
+    "glorious",
+    "super",
+    "tremendous",
+    "phenomenal",
+    "remarkable",
+    "extraordinary",
+    "mind-blowing",
+    "mind-boggling",
+    "jaw-dropping",
+    "breathtaking",
+    "miraculous",
+    "astounding",
 ]
 
 
@@ -83,12 +123,13 @@ def generate_compliment(name):
     openai.api_key = get_env_var("OPENAI_API_KEY")
 
     attribute = random.choice(attributes)
+    adjective = random.choice(adjectives)
     prompt = (
-        f"Craft a personalized compliment for {name}, highlighting their {attribute}."
+        f"Craft a compliment for {name}, highlighting their {adjective} {attribute}."
     )
 
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine="text-davinci-003",
         prompt=prompt,
         temperature=0.9,
         max_tokens=100,
@@ -148,5 +189,5 @@ if __name__ == "__main__":
         f"Sleeping for {sleep_seconds} seconds. Will wake up at {wake_up_time}"
     )
 
-    sleep(sleep_seconds)
+    # sleep(sleep_seconds)
     send_compliment(to_email, name)
