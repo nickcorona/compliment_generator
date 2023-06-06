@@ -4,13 +4,13 @@ import random
 import openai
 
 from constants import OPENAI_API_KEY
-from env_handler import load_env_vars
+from env_handler import load_env_vars, get_env_var
 
 # load environment variables
 load_env_vars()
 
 # load OpenAI API key
-openai.api_key = os.getenv(OPENAI_API_KEY)
+openai.api_key = get_env_var(OPENAI_API_KEY)
 
 # adjectives for compliments
 adjectives = [
