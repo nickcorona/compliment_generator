@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import time as time_module
 from datetime import date, datetime, time, timedelta
 from random import randint
 from time import sleep
@@ -10,9 +11,18 @@ from constants import NAME, TO_EMAIL
 from utils.email_sender import send_email
 from utils.env_handler import get_env_var, load_env_vars
 
-# Set up logging
+# Create logs directory if it doesn't exist
+if not os.path.exists("logs"):
+    os.makedirs("logs")
+
+
+# Configure logging to write messages to a file with a timestamp in the filename
+log_filename = f"logs/app_{int(time_module.time())}.log"
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    filename=log_filename,
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 
 
